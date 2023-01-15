@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,9 +32,18 @@ namespace StudentManagementSystem
 
             //display the values
             Student student = new Student();
-            double totalStudents = Convert.ToDouble(student.totalStudent());
-            double totalMaleStudents = Convert.ToDouble(student.totalMaleStudent());
-            double totalFemaleStudents = Convert.ToDouble(student.totalFemaleStudent());
+
+            MySqlCommand mySqlCommand = new MySqlCommand("SELECT id,gender FROM student");
+            DataTable dataTable = student.getStudents(mySqlCommand);
+            List<DataRow> allStudents = dataTable.Rows.Cast<DataRow>().ToList();
+
+            int totalStudentsCount = allStudents.Count();
+            int maleStudentsCount = allStudents.Count(x => x["gender"] == "Male");
+            int femaleStudentsCount = allStudents.Count(x => x["gender"] == "Female");
+
+            double totalStudents = Convert.ToDouble(totalStudentsCount);
+            double totalMaleStudents = Convert.ToDouble(maleStudentsCount);
+            double totalFemaleStudents = Convert.ToDouble(femaleStudentsCount);
 
             //Count the %
             double malePercentage = totalMaleStudents * 100 / totalStudents;

@@ -53,37 +53,7 @@ namespace StudentManagementSystem
             command.CommandText = ("SELECT score.studentID, student.first_name, student.last_name, score.courseID, " +
             "course.label, score.score FROM student INNER JOIN score ON student.id = score.studentID INNER JOIN " +
             "course ON score.courseID = course.id");
-
-            //MySqlDataReader mySqlDataReader =  command.ExecuteReader();
-            /*
-            while (mySqlDataReader.Read())
-            {   
-                int id;
-                id = (int)mySqlDataReader["studentID"];
-            }
-            */
-            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-            DataTable table = new DataTable();
-            adapter.Fill(table);
-
-            /*
-            List<DataRow> Lista = table.AsEnumerable().ToList();
-            var firstCollumn = Lista[0][0];
-            var secondColumn = Lista[0][1];
-            */
-            return table;
-
-            /*
-            List<string> mySL = new List<string>();
-#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
-            mySL = table.AsEnumerable().Select(r => r.Field<string>("studentID")).ToList();
-#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
-            mySL.Sort();
-            return ConvertToDataTable(mySL);
-            */
-
-            //DataTable dt =  fillTableWithDBInfo(command, stephDatabase);
-            //return dt;
+            return fillTableWithDBInfo(command, stephDatabase);
 
         }
 

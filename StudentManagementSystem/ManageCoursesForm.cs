@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Collections;
 //Using created class library
 using ProjectClassLibrary;
+using MySql.Data.MySqlClient;
 
 namespace StudentManagementSystem
 {
@@ -39,12 +40,13 @@ namespace StudentManagementSystem
 
             //unselect the item from listbox
             listBoxCourses.SelectedItem = null;
-
-            ArrayList array = new ArrayList();
-            array.Add(course.totalCourses());
+            MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM course");
+            DataTable dataTable = course.getAllCourses();
+            List<DataRow> allCourses = dataTable.Rows.Cast<DataRow>().ToList();
+            int nr = allCourses.Count(x => x["id"] != "0");
 
             //display the total courses
-            labelTotalCourses.Text = "Total Courses: " + array[0];
+            labelTotalCourses.Text = "Total Courses: " + nr;
         }
 
         //create a function to display courses data depending on the index
